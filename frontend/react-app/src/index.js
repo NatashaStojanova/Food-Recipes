@@ -1,8 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'mdbreact'
+import 'reactstrap'
+import 'material-ui'
+import 'material-ui-icons'
+
+
 
 ReactDOM.render(
   <React.StrictMode>

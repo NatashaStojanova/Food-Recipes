@@ -1,13 +1,57 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Raleway", serif;
+  font-size: 16px;
+  color: #333;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway", serif;
+  font-size: 16px;
+  color: #282c34;
+}
+
+text {
+
+  font-family: "Raleway", serif;
+  font-size: 16px;
+  color: #282c34;
+}
+
+option {
+  font-family: "Raleway", serif;
+  font-size: 13px;
+  color: #282c34;
+}
+
+select {
+  font-family: "Raleway", serif;
+  font-size: 50px;
+  color: #282c34;
+}
+
+textarea {
+
+  white-space: pre-wrap;
+}
+
+label {
+
+  font-family: "Raleway", serif;
+  font-size: 16px;
+  color: #282c34;
+}
+
+AvInput {
+  font-family: "Raleway", serif;
+  font-size: 16px;
+  color: #61dafb;
+}
+
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: "Raleway", serif;
+
 }
