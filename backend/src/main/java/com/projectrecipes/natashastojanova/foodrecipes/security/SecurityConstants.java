@@ -1,8 +1,5 @@
 package com.projectrecipes.natashastojanova.foodrecipes.security;
 
-/**
- * @author Konstantin Bogdanoski (konstantin.b@live.com)
- */
 public class SecurityConstants {
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";

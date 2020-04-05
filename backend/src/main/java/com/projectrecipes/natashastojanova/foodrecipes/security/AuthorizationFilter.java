@@ -17,10 +17,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static mk.ukim.finki.vsa.security.SecurityConstants.*;
+import static com.projectrecipes.natashastojanova.foodrecipes.security.SecurityConstants.*;
 
 /**
- * @author Konstantin Bogdanoski (konstantin.b@live.com)
+ * @author Natasha Stojanova
  */
 
 public class AuthorizationFilter extends BasicAuthenticationFilter {

@@ -9,10 +9,8 @@ import java.util.Optional;
  * @author Natasha Stojanova
  */
 @Repository
-public interface UserRepository extends JpaSpecificationRepository<User>{
-
+public interface UserRepository extends JpaSpecificationRepository<User> {
     Optional<User> findByEmail(String email);
 
     Optional<User> findByUsername(String username);
-
 }

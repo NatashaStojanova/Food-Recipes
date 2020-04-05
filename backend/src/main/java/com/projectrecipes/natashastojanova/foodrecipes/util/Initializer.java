@@ -49,7 +49,7 @@ public class Initializer implements CommandLineRunner {
                 userService.save(new User("admin",
                         encoder.encode("test123"),
                         "admin@mail.com",
-                        "VSA Admin",
+                        "admin",
                         userRoleService.findByName("ROLE_ADMIN"))
                 );
             } catch (RoleNotFoundException e) {

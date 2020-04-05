@@ -46,6 +46,14 @@ public class User {
     private List<Recipe> recipeList;
 
 
-    public User(String admin, String test123, String s, String vsa_admin, UserRole role_admin) {
+    public User(String username, String password, String name, String email, UserRole userRole) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.userRole = userRole;
+
     }
+
+
 }

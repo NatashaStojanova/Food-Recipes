@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +28,8 @@ public class UserRole {
     @OneToMany(mappedBy = "userRole")
     private List<User> userList;
 
-    public UserRole(String role_user) {
+    public UserRole(String name) {
+        this.name = name;
+        this.userList = new ArrayList<>();
     }
 }
