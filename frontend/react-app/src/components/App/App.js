@@ -5,6 +5,8 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import Home from "../Home/home";
 import Header from "../Header/header";
 import Login from "../Login/login"
+import Register from "../Register/register"
+import Footer from "../Footer/footer";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
                   <Home/>}>
               </Route>
               <Route path="/login" exact render={() => <Login/>}/>
+              <Route path="/register" exact render={() => <Register/>}/>
+              <Footer/>
         </Router>
       </div>
 

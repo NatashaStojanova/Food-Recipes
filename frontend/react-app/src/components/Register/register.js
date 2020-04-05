@@ -9,10 +9,12 @@ import {AUTH_TOKEN} from "../../shared/utility";
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
  */
-class Login extends Component {
+class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: '',
+            email: '',
             username: '',
             password: '',
             waitResponse: false,
@@ -23,7 +25,7 @@ class Login extends Component {
     setErrorMessage(error) {
         if (error.response.status === 403)
             this.setState({
-                errMessage: "Invalid credentials"
+                errMessage: "Please choose another username."
             });
         else
             this.setState({
@@ -43,15 +45,17 @@ class Login extends Component {
             waitResponse: true,
         });
         const payload = {
+            "name" : this.state.name,
+            "email" : this.state.email,
             "username": this.state.username,
             "password": this.state.password
         };
-        AuthenticationService.loginUser(payload).then(resp => {
-            localStorage.setItem(AUTH_TOKEN, resp.data);
+        debugger;
+        AuthenticationService.registerUser(payload).then(resp => {
             this.setState({
                 waitResponse: false,
             });
-            this.props.history.push('/allRecipes');
+            this.props.history.push('/login');
         }).catch(error => {
             this.setErrorMessage(error);
             this.setState({
@@ -60,10 +64,6 @@ class Login extends Component {
         })
     }
 
-    componentDidMount() {
-        if (localStorage.getItem(AUTH_TOKEN) !== null && localStorage.getItem(AUTH_TOKEN) !== undefined)
-            this.props.history.push("/allRecipes")
-    }
 
     render() {
         return (
@@ -71,10 +71,23 @@ class Login extends Component {
                 {(!this.state.waitResponse ?
                     <MuiThemeProvider>
                         <div>
-                            <h1 className="text-dark">Login</h1>
+                            <br/>
+                            <h1 className="text-dark">Register</h1>
                             {this.state.errMessage !== null ? <div className="text-center text-danger">
                                 <span>{this.state.errMessage}</span>
                             </div> : <div/>}
+                            <TextField
+                                hintText="Enter your Name"
+                                floatingLabelText="Name"
+                                onChange={(event, newValue) => this.setState({name: newValue})}
+                            />
+                            <br/>
+                            <TextField
+                                hintText="Enter your E-mail"
+                                floatingLabelText="E-mail"
+                                onChange={(event, newValue) => this.setState({email: newValue})}
+                            />
+                            <br/>
                             <TextField
                                 hintText="Enter your Username"
                                 floatingLabelText="Username"
@@ -106,4 +119,4 @@ class Login extends Component {
 const style = {
     margin: 15,
 };
-export default withRouter(Login);
+export default withRouter(Register);

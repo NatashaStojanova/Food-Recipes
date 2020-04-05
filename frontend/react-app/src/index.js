@@ -9,6 +9,7 @@ import 'mdbreact'
 import 'reactstrap'
 import '@material-ui/core'
 import 'material-ui-icons'
+import 'material-ui'
 
 
 
