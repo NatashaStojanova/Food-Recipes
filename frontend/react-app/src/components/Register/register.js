@@ -102,7 +102,9 @@ class Register extends Component {
                             />
                             <br/>
                             <RaisedButton label="Submit" primary={true} style={style}
-                                          onClick={(event) => this.handleClick(event)}/>
+                                          onClick={(event) => this.handleClick(event)}/> <br/>
+                            <a href="/login">Already have an account?
+                               Go to Login!</a>
                         </div>
                     </MuiThemeProvider> :
                     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}

@@ -3,7 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {withRouter} from "react-router-dom";
-import AuthenticationService from "../../service/AuthenticationService/authenticationService"
+import AuthenticationService from "../../service/AuthenticationService/authenticationService";
 import {AUTH_TOKEN} from "../../shared/utility";
 
 /**
@@ -51,7 +51,7 @@ class Login extends Component {
             this.setState({
                 waitResponse: false,
             });
-            this.props.history.push('/allRecipes');
+            this.props.history.push('/homeRecipes');
         }).catch(error => {
             this.setErrorMessage(error);
             this.setState({
@@ -60,10 +60,7 @@ class Login extends Component {
         })
     }
 
-    componentDidMount() {
-        if (localStorage.getItem(AUTH_TOKEN) !== null && localStorage.getItem(AUTH_TOKEN) !== undefined)
-            this.props.history.push("/allRecipes")
-    }
+
 
     render() {
         return (
