@@ -71,10 +71,8 @@ class CreateRecipe extends Component{
                 <Category/>
                 <Ingredient onIngredientChange = {this.ingredientChange}/>
 
-            <Button color="primary">Submit</Button>
+            <Button color="primary" type="submit">Submit</Button>
             </div>
-
-
         )
     }
 }
