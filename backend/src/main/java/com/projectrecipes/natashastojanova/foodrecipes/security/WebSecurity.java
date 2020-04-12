@@ -35,12 +35,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
+        http.authorizeRequests().antMatchers("/**").permitAll();
         http.cors()
                 .and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
-                        LOGIN,
-                        VIDEOS).permitAll()
+                        LOGIN
+                ).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager(), userService))

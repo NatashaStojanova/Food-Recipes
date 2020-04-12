@@ -1,18 +1,18 @@
-package com.projectrecipes.natashastojanova.foodrecipes.model;
+package com.projectrecipes.natashastojanova.foodrecipes.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projectrecipes.natashastojanova.foodrecipes.model.Category;
+import com.projectrecipes.natashastojanova.foodrecipes.model.RecipeIngredient;
+import com.projectrecipes.natashastojanova.foodrecipes.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**
  * @author Natasha Stojanova
  */
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -24,24 +24,16 @@ public class Recipe {
     private float time;
     private int rating;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "recipeList")
+
     private List<User> userList;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "recipe")
+
     private List<RecipeIngredient> ingredientList;
 
-    @JsonIgnore
-    @ManyToOne
+
     private Category category;
 
 

@@ -25,11 +25,23 @@ public class IngredientController {
 
 
     @GetMapping
-    public List<Ingredient> showIngredients() {
+    public List<Ingredient> getAllIngredients() {
 
         List ingredients = new ArrayList<>();
         ingredientService.findAll().forEach(ingredient -> {
             ingredients.add(ingredient);
+        });
+
+        return ingredients;
+    }
+
+    @GetMapping("/spicyIngredients")
+    public List<Ingredient> getSpicyIngredients() {
+
+        List ingredients = new ArrayList();
+        ingredientService.findAll().forEach(ingredient -> {
+            if (ingredient.isSpicy())
+                ingredients.add(ingredient);
         });
 
         return ingredients;

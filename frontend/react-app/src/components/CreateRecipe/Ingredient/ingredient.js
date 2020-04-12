@@ -15,10 +15,21 @@ class Ingredient extends Component {
     }
 
     onIngredientChange = (e) => {
-        e.preventDefault();
 
-
-
+        let final = [];
+        let newIngredients = Object.keys(e.target.newIngredients).map((cbox) => {
+            if (e.target.newIngredients[cbox].checked)
+                return e.target.newIngredients[cbox];
+        }).filter((item) => {
+            if (item !== undefined)
+                return item;
+        }).map((item) => {
+            let id = item.value;
+            let amount = document.getElementById(id + "amount").value;
+            let obj = {};
+            obj[id] = amount;
+            final.push(obj);
+        });
 
 
     };
@@ -41,8 +52,8 @@ class Ingredient extends Component {
                                 type="checkbox"
                                 name={"newIngredients"}
                                 value={data.data[index].id}
-                                checked={false}
-                                onChange={this.onIngredientChange}
+                                onClick={this.onIngredientChange}
+
                             />
                         </td>
                         <td scope="col">
