@@ -92,8 +92,7 @@ public class RecipeController {
 
     //give me all recipes that contain this ingredients
     @GetMapping("/comboIngredients")
-    public List<Recipe> comboIngredients() {
-        List<Long> list_ID = new ArrayList<>();
+    public List<Recipe> comboIngredients(List<Long> list_ID) {
         list_ID.add((long) 1);
         list_ID.add((long) 2);
         list_ID.add((long) 3);
