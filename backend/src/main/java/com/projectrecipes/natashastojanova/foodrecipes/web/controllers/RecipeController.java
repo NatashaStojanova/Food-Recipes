@@ -1,6 +1,7 @@
 package com.projectrecipes.natashastojanova.foodrecipes.web.controllers;
 
 import com.projectrecipes.natashastojanova.foodrecipes.dto.RecipeDTO;
+import com.projectrecipes.natashastojanova.foodrecipes.exceptions.IngredientNotFoundException;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeAlreadyExistsException;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeNotFoundException;
 import com.projectrecipes.natashastojanova.foodrecipes.model.Category;
@@ -87,6 +88,28 @@ public class RecipeController {
         } else
             throw new RecipeNotFoundException();
         return recipe;
+    }
+
+    //give me all recipes that contain this ingredients
+    @GetMapping("/comboIngredients")
+    public List<Recipe> comboIngredients() {
+        List<Long> list_ID = new ArrayList<>();
+        list_ID.add((long) 1);
+        list_ID.add((long) 2);
+        list_ID.add((long) 3);
+
+        List<Recipe> recipeList = new ArrayList<>();
+        recipeService.findAll().forEach(recipe -> {
+            List<Long> ing_ID = new ArrayList<>();
+            recipeService.findOne(recipe.getId()).get().getIngredientList().forEach(ingredient -> {
+                ing_ID.add(ingredient.getId().getIngredient_id());
+            });
+            if (ing_ID.equals(list_ID)) {
+                recipeList.add(recipe);
+            }
+
+        });
+        return recipeList;
     }
 }
 

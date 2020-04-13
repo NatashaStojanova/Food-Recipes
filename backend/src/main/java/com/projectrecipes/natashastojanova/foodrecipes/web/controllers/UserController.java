@@ -30,7 +30,6 @@ public class UserController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public UserLogin registerUser(@RequestBody UserLogin user) throws RoleNotFoundException {
-
         User newUser = new User();
         newUser.setName(user.getName());
         newUser.setEmail(user.getEmail());
@@ -40,8 +39,5 @@ public class UserController {
         newUser.setUserRole(userRoleService.findByName("ROLE_USER"));
         userService.save(newUser);
         return user;
-
-
     }
-
 }

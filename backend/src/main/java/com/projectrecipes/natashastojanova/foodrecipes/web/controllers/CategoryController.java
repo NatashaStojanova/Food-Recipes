@@ -21,11 +21,11 @@ import java.util.Optional;
 public class CategoryController {
 
     private final CategoryService categoryService;
-
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
+    //show all categories
     @GetMapping
     public List<Category> getAllCategories() {
         return categoryService.findAll();
@@ -39,7 +39,6 @@ public class CategoryController {
             return category;
         } else
             throw new CategoryNotFoundException();
-
     }
 
     //create new category
@@ -54,5 +53,4 @@ public class CategoryController {
         } else
             throw new CategoryAlreadyExistsException();
     }
-
 }

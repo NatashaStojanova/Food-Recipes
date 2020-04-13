@@ -21,12 +21,11 @@ import java.util.Optional;
 public class IngredientController {
 
     private final IngredientService ingredientService;
-
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
 
-
+    //show all ingredients
     @GetMapping
     public List<Ingredient> getAllIngredients() {
         return ingredientService.findAll();
@@ -47,6 +46,7 @@ public class IngredientController {
             throw new IngredientAlreadyExistsException();
     }
 
+    //show the ingredient with specific ID
     @GetMapping("/{id}")
     public Optional<Ingredient> getIngredient(@PathVariable("id") Long id) {
         Optional<Ingredient> ingredient = ingredientService.findOne(id);
@@ -56,7 +56,7 @@ public class IngredientController {
             throw new IngredientNotFoundException();
     }
 
-    //edit ingredients
+    //edit ingredient
     @PatchMapping("/{id}")
     public Ingredient editIngredient(@PathVariable("id") Long id, IngredientDTO ingredientDTO) {
         Optional<Ingredient> ingredient = Optional.of(ingredientService.findOne(ingredientDTO.getId()).get());
@@ -103,7 +103,6 @@ public class IngredientController {
         });
         return ingredients;
     }
-
 
 }
 
