@@ -103,10 +103,9 @@ public class RecipeController {
             recipeService.findOne(recipe.getId()).get().getIngredientList().forEach(ingredient -> {
                 ing_ID.add(ingredient.getId().getIngredient_id());
             });
-            if (ing_ID.equals(list_ID)) {
+            if (ing_ID.containsAll(list_ID)) {
                 recipeList.add(recipe);
             }
-
         });
         return recipeList;
     }
