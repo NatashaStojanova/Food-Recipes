@@ -1,13 +1,26 @@
 # Food Recipes
 
-### *The main idea of this project is for users to be able to share their food recipe, to filter recipes, rate them, and use them as a lunch idea*
+### *The main idea of this project is for users to be able to share their food recipes, to filter recipes, rate them, and use them as a lunch idea*
 
 #### Additional functionalities:
-- A user can post recipes for food, but first the admin must approve them.
 
-- The user can filter the recipes by category *(healthy food, fast food, vegan food, vegetarian food*)
+ - Login/Registration
 
-- The user can find recipes based on ingredients that he has.
+ - After successful registration, user can:
+
+   - post recipes for food, but first the admin must approve them
+   
+   - view all recipes
+   
+   - edit his own recipes
+   
+   - delete his own recipes
+   
+   - rate the recipes
+
+   - filter the recipes by category *(healthy food, fast food, vegan food, vegetarian food*)
+
+   - find recipes based on ingredients that he has
 
 
 ### How to start the project?
