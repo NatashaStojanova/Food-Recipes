@@ -1,5 +1,7 @@
 package com.projectrecipes.natashastojanova.foodrecipes.web.controllers;
 
+import com.projectrecipes.natashastojanova.foodrecipes.dto.RecipeDTO;
+import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeAlreadyExistsException;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeNotFoundException;
 import com.projectrecipes.natashastojanova.foodrecipes.model.Category;
 import com.projectrecipes.natashastojanova.foodrecipes.model.Recipe;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Natasha Stojanova
@@ -34,12 +37,26 @@ public class RecipeController {
 
     @GetMapping
     public List<Recipe> getAllRecipes() {
-        List<Recipe> recipes = new ArrayList<>();
-        recipeService.findAll().forEach(recipe -> {
-            recipes.add(recipe);
-        });
+        return recipeService.findAll();
+    }
 
-        return recipes;
+
+    //create new Recipe
+    @PostMapping
+    public Recipe addNewRecipe(RecipeDTO recipeDTO) {
+        Optional<Recipe> recipe = Optional.of(recipeService.findByName(recipeDTO.getName()).get());
+        if (!recipe.isPresent()) {
+            recipe.get().setName(recipeDTO.getName());
+            recipe.get().setTime(recipeDTO.getTime());
+            recipe.get().setRating(recipeDTO.getRating());
+            recipe.get().setIngredientList(recipeDTO.getIngredientList());
+            recipe.get().setCategory(recipeDTO.getCategory());
+            recipe.get().setDescription(recipeDTO.getDescription());
+            recipe.get().setUserList(recipeDTO.getUserList());
+            recipeService.save(recipe.get());
+            return recipe.get();
+        } else
+            throw new RecipeAlreadyExistsException();
     }
 
     //give me the pizza with specific ID
@@ -56,7 +73,7 @@ public class RecipeController {
 
     //give me the pizza with specific ID
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-    public Recipe editRecipe(@PathVariable("id") Long id, Recipe recipeDTO) {
+    public Recipe editRecipe(@PathVariable("id") Long id, RecipeDTO recipeDTO) {
         Recipe recipe;
         if (recipeService.findOne(id).isPresent()) {
             recipe = recipeService.findOne(id).get();
@@ -69,9 +86,8 @@ public class RecipeController {
             recipeService.save(recipe);
         } else
             throw new RecipeNotFoundException();
-
         return recipe;
     }
-
-
 }
+
+

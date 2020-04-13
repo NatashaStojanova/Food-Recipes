@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Recipe {
+public class RecipeDTO {
 
     private String name;
     private String description;
