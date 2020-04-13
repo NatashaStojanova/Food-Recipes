@@ -7,7 +7,7 @@
 
 - The user can filter the recipes by category *(healthy food, fast food, vegan food, vegetarian food*)
 
-- If the user has no idea what to cook, then he can check the ingredients, and see which recipes he can make.
+- The user can find recipes based on ingredients that he has.
 
 
 ### How to start the project?
