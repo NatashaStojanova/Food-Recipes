@@ -1,16 +1,20 @@
 package com.projectrecipes.natashastojanova.foodrecipes.web.controllers;
 
 import com.projectrecipes.natashastojanova.foodrecipes.dto.RecipeDTO;
-import com.projectrecipes.natashastojanova.foodrecipes.exceptions.IngredientNotFoundException;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeAlreadyExistsException;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeNotFoundException;
 import com.projectrecipes.natashastojanova.foodrecipes.model.Category;
+import com.projectrecipes.natashastojanova.foodrecipes.model.Ingredient;
 import com.projectrecipes.natashastojanova.foodrecipes.model.Recipe;
+import com.projectrecipes.natashastojanova.foodrecipes.model.RecipeIngredient;
 import com.projectrecipes.natashastojanova.foodrecipes.service.CategoryService;
 import com.projectrecipes.natashastojanova.foodrecipes.service.IngredientService;
+import com.projectrecipes.natashastojanova.foodrecipes.service.RecipeIngredientService;
 import com.projectrecipes.natashastojanova.foodrecipes.service.RecipeService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +31,16 @@ public class RecipeController {
     private final RecipeService recipeService;
     private final IngredientService ingredientService;
     private final CategoryService categoryService;
+    private final RecipeIngredientService recipeIngredientService;
 
     public RecipeController(RecipeService recipeService,
                             IngredientService ingredientService,
-                            CategoryService categoryService) {
+                            CategoryService categoryService,
+                            RecipeIngredientService recipeIngredientService) {
         this.recipeService = recipeService;
         this.ingredientService = ingredientService;
         this.categoryService = categoryService;
+        this.recipeIngredientService = recipeIngredientService;
     }
 
     @GetMapping
@@ -44,20 +51,31 @@ public class RecipeController {
 
     //create new Recipe
     @PostMapping
-    public Recipe addNewRecipe(RecipeDTO recipeDTO) {
-        Optional<Recipe> recipe = Optional.of(recipeService.findByName(recipeDTO.getName()).get());
+    public Recipe addNewRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
+        Optional<Recipe> recipe = recipeService.findByName(recipeDTO.getName());
+        Recipe newRecipe = new Recipe();
         if (!recipe.isPresent()) {
-            recipe.get().setName(recipeDTO.getName());
-            recipe.get().setTime(recipeDTO.getTime());
-            recipe.get().setRating(recipeDTO.getRating());
-            recipe.get().setIngredientList(recipeDTO.getIngredientList());
-            recipe.get().setCategory(recipeDTO.getCategory());
-            recipe.get().setDescription(recipeDTO.getDescription());
-            recipe.get().setUserList(recipeDTO.getUserList());
-            recipeService.save(recipe.get());
-            return recipe.get();
+            newRecipe.setName(recipeDTO.getName());
+            newRecipe.setDescription(recipeDTO.getDescription());
+            newRecipe.setTime(recipeDTO.getTime());
+            Optional<Category> category = categoryService.findById(recipeDTO.getCategory());
+            newRecipe.setCategory(category.get());
+            recipeService.save(newRecipe);
+            RecipeIngredient recipeIngredient = new RecipeIngredient();
+            recipeDTO.getIngredientsList().forEach(ingID -> {
+                Optional<Ingredient> ing = ingredientService.findOne(ingID);
+                if (ing.isPresent()) {
+                    recipeIngredient.setIngredient(ing.get());
+                    recipeIngredient.setRecipe(newRecipe);
+                }
+                recipeIngredientService.save(recipeIngredient);
+            });
+
         } else
             throw new RecipeAlreadyExistsException();
+
+
+        return newRecipe;
     }
 
     //give me the pizza with specific ID
@@ -72,7 +90,7 @@ public class RecipeController {
         return recipe;
     }
 
-    //give me the pizza with specific ID
+    /*//give me the pizza with specific ID
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
     public Recipe editRecipe(@PathVariable("id") Long id, RecipeDTO recipeDTO) {
         Recipe recipe;
@@ -89,7 +107,7 @@ public class RecipeController {
             throw new RecipeNotFoundException();
         return recipe;
     }
-
+*/
     //give me all recipes that contain this ingredients
     @GetMapping("/comboIngredients")
     public List<Recipe> comboIngredients(List<Long> list_ID) {

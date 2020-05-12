@@ -31,10 +31,10 @@ public class RecipeDTO {
     private List<User> userList;
 
 
-    private List<RecipeIngredient> ingredientList;
+    private List<Long> ingredientsList;
 
 
-    private Category category;
+    private Long category;
 
 
 }

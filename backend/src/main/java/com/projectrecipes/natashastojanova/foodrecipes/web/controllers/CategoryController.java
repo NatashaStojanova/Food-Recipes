@@ -25,7 +25,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    //show all categories
+    //get all categories
     @GetMapping
     public List<Category> getAllCategories() {
         return categoryService.findAll();

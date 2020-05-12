@@ -1,22 +1,17 @@
 package com.projectrecipes.natashastojanova.foodrecipes.repository;
 
-import com.projectrecipes.natashastojanova.foodrecipes.model.Recipe;
 import com.projectrecipes.natashastojanova.foodrecipes.model.RecipeIngredient;
 import com.projectrecipes.natashastojanova.foodrecipes.model.RecipeIngredientCompositeKey;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @author Natasha Stojanova
  */
 @Repository
-public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredient, RecipeIngredientCompositeKey>{
+public interface RecipeIngredientRepository extends JpaSpecificationRepository<RecipeIngredient> {
 
-    @Transactional
-    @Modifying
-    void deleteRecipeIngredientByRecipe(Recipe recipe);
 
 }

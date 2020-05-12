@@ -1,7 +1,6 @@
 import React, {Component, useEffect, useState} from 'react'
 import axios from "../../../axios/axios"
 
-
 class Ingredient extends Component {
 
     constructor(props){
@@ -9,34 +8,37 @@ class Ingredient extends Component {
 
         this.state = {
             ingredients: [],
+            ingedientsList: [],
+            checkedList:[],
             isChecked: false,
 
         }
     }
 
-    onIngredientChange = (e) => {
+    onIngredientChange = (e,id) => {
+        let resultArray = []
+        if(e.target.checked)      //if checked (true), then add this id into checkedList
+        {
+            resultArray = this.state.checkedList.filter(CheckedId=>{
+                return CheckedId !== id
+            })
+            resultArray.push(id)
+        }
+        else                    //if not checked (false), then remove this id from checkedList
+        {
+            resultArray = this.state.checkedList.filter(CheckedId=>{
+                return CheckedId !== id
+            })
+        }
 
-        let final = [];
-        let newIngredients = Object.keys(e.target.newIngredients).map((cbox) => {
-            if (e.target.newIngredients[cbox].checked)
-                return e.target.newIngredients[cbox];
-        }).filter((item) => {
-            if (item !== undefined)
-                return item;
-        }).map((item) => {
-            let id = item.value;
-            let amount = document.getElementById(id + "amount").value;
-            let obj = {};
-            obj[id] = amount;
-            final.push(obj);
-        });
+        this.setState({
+            checkedList:resultArray
+        })
 
-
+        //console.log(resultArray)   // get all checked ID
+       
+        this.props.onIngredientChange(resultArray);
     };
-
-
-
-
     componentDidMount() {
         axios.get("/ingredients").then((data) => {
             const ingredients = Object.keys(data.data).map((ingredient, index) => {
@@ -52,7 +54,7 @@ class Ingredient extends Component {
                                 type="checkbox"
                                 name={"newIngredients"}
                                 value={data.data[index].id}
-                                onClick={this.onIngredientChange}
+                                onChange={(e)=>this.onIngredientChange(e,data.data[index].id)}
 
                             />
                         </td>

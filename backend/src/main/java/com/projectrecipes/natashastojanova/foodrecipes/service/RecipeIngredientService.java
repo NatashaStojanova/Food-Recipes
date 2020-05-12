@@ -8,12 +8,6 @@ import java.util.List;
 /**
  * @author Natasha Stojanova
  */
-public interface RecipeIngredientService {
-
-    public List<RecipeIngredient> findAll();
-
-    public void save(RecipeIngredient pizzaIngredient);
-
-    public void deleteAllByRecipe(Recipe recipe);
+public interface RecipeIngredientService extends BaseEntityCrudService<RecipeIngredient> {
 
 }
