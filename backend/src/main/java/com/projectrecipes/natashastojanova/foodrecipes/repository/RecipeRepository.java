@@ -9,8 +9,10 @@ import java.util.Optional;
  * @author Natasha Stojanova
  */
 @Repository
-public interface RecipeRepository extends JpaSpecificationRepository<Recipe>{
+public interface RecipeRepository extends JpaSpecificationRepository<Recipe> {
     Optional<Recipe> findByName(String name);
 
     Optional<Recipe> findByRating(Integer rating);
+
+    boolean existsByName(String name);
 }

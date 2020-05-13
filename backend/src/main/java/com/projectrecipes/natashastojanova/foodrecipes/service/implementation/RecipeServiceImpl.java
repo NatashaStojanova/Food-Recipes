@@ -19,11 +19,22 @@ public class RecipeServiceImpl extends BaseEntityCrudServiceImpl<Recipe, RecipeR
     }
 
     @Override
-    protected RecipeRepository getRepository() { return recipeRepository;}
+    protected RecipeRepository getRepository() {
+        return recipeRepository;
+    }
 
     @Override
-    public Optional<Recipe> findByName(String name){ return recipeRepository.findByName(name);}
+    public Optional<Recipe> findByName(String name) {
+        return recipeRepository.findByName(name);
+    }
 
     @Override
-    public Optional<Recipe> findByRating(Integer rating){return recipeRepository.findByRating(rating);}
+    public Optional<Recipe> findByRating(Integer rating) {
+        return recipeRepository.findByRating(rating);
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        return getRepository().existsByName(name);
+    }
 }

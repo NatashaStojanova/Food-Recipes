@@ -52,29 +52,26 @@ public class RecipeController {
     //create new Recipe
     @PostMapping
     public Recipe addNewRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
-        Optional<Recipe> recipe = recipeService.findByName(recipeDTO.getName());
-        Recipe newRecipe = new Recipe();
-        if (!recipe.isPresent()) {
-            newRecipe.setName(recipeDTO.getName());
-            newRecipe.setDescription(recipeDTO.getDescription());
-            newRecipe.setTime(recipeDTO.getTime());
-            Optional<Category> category = categoryService.findById(recipeDTO.getCategory());
-            newRecipe.setCategory(category.get());
-            recipeService.save(newRecipe);
-            RecipeIngredient recipeIngredient = new RecipeIngredient();
-            recipeDTO.getIngredientsList().forEach(ingID -> {
-                Optional<Ingredient> ing = ingredientService.findOne(ingID);
-                if (ing.isPresent()) {
-                    recipeIngredient.setIngredient(ing.get());
-                    recipeIngredient.setRecipe(newRecipe);
-                }
-                recipeIngredientService.save(recipeIngredient);
-            });
-
-        } else
+        if (recipeService.existsByName(recipeDTO.getName()))
             throw new RecipeAlreadyExistsException();
 
+        Recipe newRecipe = new Recipe();
+        newRecipe.setName(recipeDTO.getName());
+        newRecipe.setDescription(recipeDTO.getDescription());
+        newRecipe.setTime(recipeDTO.getTime());
+        Optional<Category> category = categoryService.findById(recipeDTO.getCategory());
+        newRecipe.setCategory(category.get());
+        recipeService.save(newRecipe);
 
+        recipeDTO.getIngredientsList().forEach(ingID -> {
+            Optional<Ingredient> ing = ingredientService.findOne(ingID);
+            if (ing.isPresent()) {
+                RecipeIngredient recipeIngredient = new RecipeIngredient();
+                recipeIngredient.setIngredient(ing.get());
+                recipeIngredient.setRecipe(newRecipe);
+                recipeIngredientService.save(recipeIngredient);
+            }
+        });
         return newRecipe;
     }
 
@@ -119,7 +116,7 @@ public class RecipeController {
         recipeService.findAll().forEach(recipe -> {
             List<Long> ing_ID = new ArrayList<>();
             recipeService.findOne(recipe.getId()).get().getIngredientList().forEach(ingredient -> {
-                ing_ID.add(ingredient.getId().getIngredient_id());
+                ing_ID.add(ingredient.getId());
             });
             if (ing_ID.containsAll(list_ID)) {
                 recipeList.add(recipe);

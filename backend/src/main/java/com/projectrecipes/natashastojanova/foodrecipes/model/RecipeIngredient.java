@@ -17,22 +17,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecipeIngredient {
-
-    @EmbeddedId
-    RecipeIngredientCompositeKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
 
     private float amount;
 
     @JsonIgnore
     @ManyToOne
-    @MapsId("recipe_id")
-    @JoinColumn(name = "recipe_id")
     Recipe recipe;
 
     @JsonIgnore
     @ManyToOne
-    @MapsId("ingredient_id")
-    @JoinColumn(name = "ingredient_id")
     Ingredient ingredient;
 
 }

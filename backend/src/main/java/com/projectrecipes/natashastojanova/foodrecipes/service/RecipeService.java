@@ -7,9 +7,11 @@ import java.util.Optional;
 /**
  * @author Natasha Stojanova
  */
-public interface RecipeService extends BaseEntityCrudService<Recipe>{
+public interface RecipeService extends BaseEntityCrudService<Recipe> {
 
     public Optional<Recipe> findByName(String name);
 
     public Optional<Recipe> findByRating(Integer rating);
+
+    public boolean existsByName(String name);
 }

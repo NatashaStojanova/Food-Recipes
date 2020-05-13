@@ -1,0 +1,8 @@
+POST http://localhost:8080/recipes
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0eSI6IlJPTEVfQURNSU4iLCJleHAiOjE1OTAyNjExNTV9.AyHCsadR6abRbe2p1r6NZGFqAUgsnc2t21VIQj234VyGLz1vYK2n208W8r_zFWb8Uh0DrvlX9E_Mzw1H3iBkSw
+Content-Type: application/json
+
+{
+}
+
+###
