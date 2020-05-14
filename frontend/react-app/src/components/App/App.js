@@ -9,6 +9,7 @@ import Register from "../Register/register"
 import Footer from "../Footer/footer";
 import CreateRecipe from "../CreateRecipe/createRecipe"
 import HomeRecipes from "../HomeRecipes/homeRecipes";
+import Recipes from "../Recipes/recipes";
 function App() {
   return (
       <div className="App">
@@ -21,6 +22,8 @@ function App() {
               <Route path="/register" exact render={() => <Register/>}/>
               <Route path="/createRecipe" exact render={() => <CreateRecipe/>}/>
               <Route path="/homeRecipes" exact render={() => <HomeRecipes/>}/>
+              <Route path="/allRecipes" exact render={() => <Recipes/>}/>
+
               <Footer/>
         </Router>
       </div>

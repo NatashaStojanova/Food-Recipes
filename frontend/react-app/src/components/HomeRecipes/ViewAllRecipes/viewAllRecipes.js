@@ -26,12 +26,12 @@ class ViewAllRecipes extends Component {
 
         return (
 
-            <div class="card card-image" style={{backgroundImage: `url(https://mdbootstrap.com/img/Photos/Others/food.jpg)`}}>
+            <div class="card card-image" style={{backgroundImage: `url()`}}>
 
 
                 <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
                     <div>
-                        <h1 class="pink-text"><i class="fas fa-eye"></i> Marketing</h1>
+                        <h1 class="pink-text"><i class="fas fa-eye"></i>View All Recipes</h1>
                         <h3 class="card-title pt-2"><strong>This is the card title</strong></h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
                             optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos.
