@@ -10,6 +10,7 @@ import Footer from "../Footer/footer";
 import CreateRecipe from "../CreateRecipe/createRecipe"
 import HomeRecipes from "../HomeRecipes/homeRecipes";
 import Recipes from "../Recipes/recipes";
+import RecipeDetails from "../Recipes/RecipeDetails/recipeDetails";
 function App() {
   return (
       <div className="App">
@@ -23,6 +24,7 @@ function App() {
               <Route path="/createRecipe" exact render={() => <CreateRecipe/>}/>
               <Route path="/homeRecipes" exact render={() => <HomeRecipes/>}/>
               <Route path="/allRecipes" exact render={() => <Recipes/>}/>
+              <Route path="/recipe/:id/details" exact render={() => <RecipeDetails/>}/>
 
               <Footer/>
         </Router>

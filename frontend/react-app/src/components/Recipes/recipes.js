@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from "../../axios/axios";
 import {Link} from "react-router-dom";
+import RecipeDetails from "./RecipeDetails/recipeDetails";
 
 class Recipes extends Component{
     constructor(props){
@@ -27,9 +28,9 @@ class Recipes extends Component{
                                 className="btn btn-success"
                                 id={data.data[index].id}
                                 key={index}
-                                to={"/recipeDetails/" + data.data[index].id}
+                                to={"/recipe/" + data.data[index].id + "/details"}
                                 type="button"
-                                name="amount" >View more...</Link>
+                                name="amount">View more...</Link>
                         </td>
                     </tr>
                 );
