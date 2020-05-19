@@ -13,7 +13,6 @@ import com.projectrecipes.natashastojanova.foodrecipes.service.RecipeIngredientS
 import com.projectrecipes.natashastojanova.foodrecipes.service.RecipeService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,14 +76,23 @@ public class RecipeController {
 
     //give me the pizza with specific ID
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Recipe getRecipe(@PathVariable("id") Long id) {
+    public RecipeDTO getRecipe(@PathVariable("id") Long id) {
         Recipe recipe;
+        RecipeDTO recipeDTO = new RecipeDTO();
         if (recipeService.findOne(id).isPresent()) {
             recipe = recipeService.findOne(id).get();
+            List<Ingredient> list = new ArrayList<>();
+            recipe.getIngredientList().stream().forEach(item -> {
+                list.add(item.getIngredient());
+            });
+            recipeDTO.setIngredients(list);
+            recipeDTO.setName(recipe.getName());
+            recipeDTO.setTime(recipe.getTime());
+            recipeDTO.setDescription(recipe.getDescription());
         } else
             throw new RecipeNotFoundException();
 
-        return recipe;
+        return recipeDTO;
     }
 
     /*//give me the pizza with specific ID

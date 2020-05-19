@@ -1,6 +1,7 @@
 package com.projectrecipes.natashastojanova.foodrecipes.dto;
 
 import com.projectrecipes.natashastojanova.foodrecipes.model.Category;
+import com.projectrecipes.natashastojanova.foodrecipes.model.Ingredient;
 import com.projectrecipes.natashastojanova.foodrecipes.model.RecipeIngredient;
 import com.projectrecipes.natashastojanova.foodrecipes.model.User;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,8 @@ public class RecipeDTO {
 
 
     private List<Long> ingredientsList;
+
+    private List<Ingredient> ingredients;
 
 
     private Long category;
