@@ -74,7 +74,7 @@ public class RecipeController {
         return newRecipe;
     }
 
-    //give me the pizza with specific ID
+    //give me the recipe with specific ID
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public RecipeDTO getRecipe(@PathVariable("id") Long id) {
         Recipe recipe;

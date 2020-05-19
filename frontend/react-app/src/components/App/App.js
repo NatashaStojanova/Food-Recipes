@@ -11,6 +11,7 @@ import CreateRecipe from "../CreateRecipe/createRecipe"
 import HomeRecipes from "../HomeRecipes/homeRecipes";
 import Recipes from "../Recipes/recipes";
 import RecipeDetails from "../Recipes/RecipeDetails/recipeDetails";
+import Exe from "../exe"
 function App() {
   return (
       <div className="App">
@@ -25,6 +26,7 @@ function App() {
               <Route path="/homeRecipes" exact render={() => <HomeRecipes/>}/>
               <Route path="/allRecipes" exact render={() => <Recipes/>}/>
               <Route path="/recipe/:id/details" exact render={() => <RecipeDetails/>}/>
+              <Route path="/exe" exact render={() => <Exe/>}/>
 
               <Footer/>
         </Router>
