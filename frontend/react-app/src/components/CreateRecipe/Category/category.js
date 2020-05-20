@@ -36,9 +36,10 @@ class Category extends Component{
 
     render() {
         return(
-            <div>
-                <h5>Choose a category</h5>
-                <select name="name" onChange={this.onCategoryChange}>{this.state.categories}</select>
+            <div className="form-group col-md-5">
+                <select name="name" class="form-control"
+                        onChange={this.onCategoryChange}>{this.state.categories}</select>
+                <h6>Choose a category</h6>
 
             </div>
         )

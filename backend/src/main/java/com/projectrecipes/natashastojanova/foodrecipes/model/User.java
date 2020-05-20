@@ -36,14 +36,7 @@ public class User {
     @ManyToOne
     private UserRole userRole;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "user_recipe",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "recipe_id")})
+    @OneToMany(mappedBy = "user")
     private List<Recipe> recipeList;
 
 

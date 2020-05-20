@@ -31,11 +31,13 @@ public class RecipeDTO {
 
     private List<User> userList;
 
+    private User user;
 
     private List<Long> ingredientsList;
 
     private List<Ingredient> ingredients;
 
+    private Category recipeCategory;
 
     private Long category;
 

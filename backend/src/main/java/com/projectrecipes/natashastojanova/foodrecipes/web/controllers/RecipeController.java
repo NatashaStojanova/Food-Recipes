@@ -88,6 +88,8 @@ public class RecipeController {
             recipeDTO.setIngredients(list);
             recipeDTO.setName(recipe.getName());
             recipeDTO.setTime(recipe.getTime());
+            recipeDTO.setRecipeCategory(recipe.getCategory());
+            recipeDTO.setUser(recipe.getUser());
             recipeDTO.setDescription(recipe.getDescription());
         } else
             throw new RecipeNotFoundException();
@@ -131,6 +133,14 @@ public class RecipeController {
             }
         });
         return recipeList;
+    }
+
+    @RequestMapping(value = "/search/{term}", method = RequestMethod.GET)
+    public List<Recipe> searchRecipeByName(@PathVariable("term") String term) {
+        if(term.isEmpty()){
+            return recipeService.findAll();
+        }
+        return recipeService.searchByName(term);
     }
 }
 

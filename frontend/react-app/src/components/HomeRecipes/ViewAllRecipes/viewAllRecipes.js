@@ -31,8 +31,7 @@ class ViewAllRecipes extends Component {
 
                 <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
                     <div>
-                        <h1 class="pink-text"><i class="fas fa-eye"></i>View All Recipes</h1>
-                        <h3 class="card-title pt-2"><strong>This is the card title</strong></h3>
+                        <h1 class="pink-text"><i class="fas fa-eye"></i> View All Recipes</h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
                             optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos.
                             Odit sed qui, dolorum!.</p>

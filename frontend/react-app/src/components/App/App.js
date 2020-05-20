@@ -12,6 +12,7 @@ import HomeRecipes from "../HomeRecipes/homeRecipes";
 import Recipes from "../Recipes/recipes";
 import RecipeDetails from "../Recipes/RecipeDetails/recipeDetails";
 import Exe from "../exe"
+import Parent from "../parent";
 function App() {
   return (
       <div className="App">
@@ -27,6 +28,7 @@ function App() {
               <Route path="/allRecipes" exact render={() => <Recipes/>}/>
               <Route path="/recipe/:id/details" exact render={() => <RecipeDetails/>}/>
               <Route path="/exe" exact render={() => <Exe/>}/>
+              <Route path="/exec" exact render={() => <Parent/>}/>
 
               <Footer/>
         </Router>

@@ -28,13 +28,9 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "recipeList")
-    private List<User> userList;
+    @JsonIgnore
+    @ManyToOne
+    private User user;
 
     @JsonIgnore
     @OneToMany(mappedBy = "recipe")
