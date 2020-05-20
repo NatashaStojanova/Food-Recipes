@@ -1,6 +1,7 @@
 package com.projectrecipes.natashastojanova.foodrecipes.web.controllers;
 
 import com.projectrecipes.natashastojanova.foodrecipes.dto.RecipeDTO;
+import com.projectrecipes.natashastojanova.foodrecipes.exceptions.CategoryNotFoundException;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeAlreadyExistsException;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeNotFoundException;
 import com.projectrecipes.natashastojanova.foodrecipes.model.Category;
@@ -137,11 +138,27 @@ public class RecipeController {
 
     @RequestMapping(value = "/search/{term}", method = RequestMethod.GET)
     public List<Recipe> searchRecipeByName(@PathVariable("term") String term) {
-        if(term.isEmpty()){
+        if (term.isEmpty()) {
             return recipeService.findAll();
         }
         return recipeService.searchByName(term);
     }
+
+    @RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
+    public List<Recipe> searchRecipeByCategory(@PathVariable("id") Long id) {
+        Optional<Category> category = categoryService.findById(id);
+        List<Recipe> recipes = new ArrayList<>();
+        if (!category.isPresent())
+            throw new CategoryNotFoundException();
+
+        recipeService.findAll().stream().forEach(recipe -> {
+            if (recipe.getCategory().getName().equals(category.get().getName()))
+                recipes.add(recipe);
+        });
+        return recipes;
+    }
+
+
 }
 
 

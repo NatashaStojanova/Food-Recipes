@@ -1,10 +1,12 @@
 package com.projectrecipes.natashastojanova.foodrecipes.service.implementation;
 
+import com.projectrecipes.natashastojanova.foodrecipes.dto.RecipeDTO;
 import com.projectrecipes.natashastojanova.foodrecipes.model.Recipe;
 import com.projectrecipes.natashastojanova.foodrecipes.repository.RecipeRepository;
 import com.projectrecipes.natashastojanova.foodrecipes.service.RecipeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -37,4 +39,11 @@ public class RecipeServiceImpl extends BaseEntityCrudServiceImpl<Recipe, RecipeR
     public boolean existsByName(String name) {
         return getRepository().existsByName(name);
     }
+
+    @Override
+    public List<Recipe> searchByName(String term) {
+        return recipeRepository.findAllByNameContains(term);
+    }
+
+
 }

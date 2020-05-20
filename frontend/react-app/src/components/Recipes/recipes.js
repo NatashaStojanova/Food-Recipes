@@ -2,11 +2,11 @@ import React, {useEffect, useState} from "react";
 import axios from "../../axios/axios";
 import RecipeDetails from "./RecipeDetails/recipeDetails";
 import Search from "../Search/search";
+import Category from "../CreateRecipe/Category/category";
 
 const Recipes = () => {
 
     const searchTerm = (term) => {
-        debugger;
         if (term == '') {
             axios.get("/recipes").then((data) => {
                 console.log(data.data);
@@ -19,6 +19,15 @@ const Recipes = () => {
                 setRecipe(data.data);
             });
         }
+    }
+
+    const categoryChange = (category) => {
+        debugger;
+        axios.get("/recipes/category/" + category).then((data) => {
+            console.log(data.data);
+            setRecipe(data.data);
+        });
+
     }
 
     const [recipe, setRecipe] = useState({});
@@ -40,7 +49,10 @@ const Recipes = () => {
     return (
         <div className="container">
             <br/>
-            <Search onSearchTerm={searchTerm}/>
+            <div className="row">
+                <Search onSearchTerm={searchTerm}/>
+                <Category onCategoryChange = {categoryChange}/>
+            </div>
             <br/>
             <div className={"row"}>
                 {allRecipes}

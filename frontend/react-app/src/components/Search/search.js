@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Search = (props) => {
-    debugger
     const onSearchTerm = (e) => {
         e.preventDefault();
         props.onSearchTerm(e.target.searchTerm.value);
