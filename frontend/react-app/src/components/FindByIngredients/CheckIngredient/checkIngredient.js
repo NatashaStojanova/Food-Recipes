@@ -1,50 +1,44 @@
 import React, {Component, useEffect, useState} from 'react'
 import axios from "../../../axios/axios"
 
-class Ingredient extends Component {
+class CheckIngredient extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.state = {
             ingredients: [],
             ingedientsList: [],
-            checkedList:[],
+            checkedList: [],
             isChecked: false,
 
         }
     }
 
-    onIngredientChange = (e,id) => {
-        let resultArray = {};
-        let key = e.target.name;
-        let val = e.target.value;
-
-        if (key === "amount" || e.target.checked)      //if checked (true), then add this id into checkedList
+    onIngredientChange = (e, id) => {
+        let resultArray = []
+        if (e.target.checked)      //if checked (true), then add this id into checkedList
         {
-            resultArray = this.state.checkedList.filter(checkedIngredient => {
-                return checkedIngredient.id !== id
-            });
-            if (key === "amount")
-                resultArray.push({id: id, amount: val});
-            else
-                resultArray.push({id: id, amount: null});
-        }
-        else                    //if not checked (false), then remove this id from checkedList
+            resultArray = this.state.checkedList.filter(CheckedId => {
+                return CheckedId !== id
+            })
+            resultArray.push(id)
+        } else                    //if not checked (false), then remove this id from checkedList
         {
-            resultArray = this.state.checkedList.filter(CheckedId=>{
+            resultArray = this.state.checkedList.filter(CheckedId => {
                 return CheckedId !== id
             })
         }
 
         this.setState({
-            checkedList:resultArray
-        });
+            checkedList: resultArray
+        })
 
         //console.log(resultArray)   // get all checked ID
 
         this.props.onIngredientChange(resultArray);
     };
+
     componentDidMount() {
         axios.get("/ingredients").then((data) => {
             const ingredients = Object.keys(data.data).map((ingredient, index) => {
@@ -62,18 +56,6 @@ class Ingredient extends Component {
                                 value={data.data[index].id}
                                 onChange={(e) => this.onIngredientChange(e, data.data[index].id)}
 
-                            />
-                        </td>
-                        <td scope="col">
-                            <input
-                                id={data.data[index].id + "amount"}
-                                key={index}
-                                type="number"
-                                min="0"
-                                max="500"
-                                name="amount"
-                                placeholder="grams"
-                                onChange={(e) => this.onIngredientChange(e, data.data[index].id)}
                             />
                         </td>
                     </tr>
@@ -96,9 +78,6 @@ class Ingredient extends Component {
                         <th scope="col">
                             <h5>Check</h5>
                         </th>
-                        <th scope="col">
-                            <h5>Amount</h5>
-                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -109,4 +88,5 @@ class Ingredient extends Component {
         )
     }
 }
-export default Ingredient;
+
+export default CheckIngredient;

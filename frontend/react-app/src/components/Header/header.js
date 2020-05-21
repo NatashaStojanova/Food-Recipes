@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import Search from '../Search/search'
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +30,7 @@ const Header = () => {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title} align="left" color={"inherit"}>
-                        News
+                        <Button onClick={() => history.push('/')}>Home</Button>
                     </Typography>
                     <Button color="inherit" onClick={() => history.push('/login')}>Login</Button>
                     <Button color="inherit" onClick={() => history.push('/register')}>Register</Button>

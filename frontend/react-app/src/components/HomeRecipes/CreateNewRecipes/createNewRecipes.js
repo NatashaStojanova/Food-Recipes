@@ -1,15 +1,5 @@
 import React, { Component } from 'react';
-import {
-    MDBContainer,
-    MDBCol,
-    MDBCollapse,
-    MDBCard,
-    MDBCardBody,
-    MDBCollapseHeader,
-    MDBCardImage,
-    MDBRow,
-    MDBView
-} from 'mdbreact';
+import {Link} from "react-router-dom";
 
 class CreateNewRecipes extends Component {
     state = {
@@ -23,28 +13,17 @@ class CreateNewRecipes extends Component {
 
     render() {
         const { collapseID } = this.state;
-
         return (
-
             <div class="card card-image" style={{backgroundImage: `url()`}}>
-
-
                 <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
                     <div>
-                        <h1 class="pink-text"><i class="fas fa-plus"></i> Create new recipe</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
-                            optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos.
-                            Odit sed qui, dolorum!.</p>
-                        <a class="btn btn-pink" href="/createRecipe"><i class="fas fa-clone left"></i> Create Recipe</a>
+                        <br/><br/>
+                        <h1 class="pink-text"><i class="fas fa-plus"></i> <Link to={"/createRecipe"}>Create new
+                            recipe</Link></h1>
                     </div>
                 </div>
-
             </div>
-
-
-
         );
     }
 }
-
 export default CreateNewRecipes;

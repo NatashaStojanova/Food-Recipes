@@ -63,11 +63,9 @@ class Register extends Component {
             });
         })
     }
-
-
     render() {
         return (
-            <div>
+            <div class="container">
                 {(!this.state.waitResponse ?
                     <MuiThemeProvider>
                         <div>

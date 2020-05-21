@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
 import axios from "../../../axios/axios";
 
 class Category extends Component{

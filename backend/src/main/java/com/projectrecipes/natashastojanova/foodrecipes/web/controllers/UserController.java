@@ -31,6 +31,8 @@ public class UserController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public UserLogin registerUser(@RequestBody UserLogin user) throws RoleNotFoundException {
         User newUser = new User();
+        if(userService.findByUsername(user.getUsername()).isPresent())
+            throw new UserAlreadyExistsException();
         newUser.setName(user.getName());
         newUser.setEmail(user.getEmail());
         newUser.setUsername(user.getUsername());

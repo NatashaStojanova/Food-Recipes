@@ -3,8 +3,11 @@ import axios from "../../axios/axios";
 import RecipeDetails from "./RecipeDetails/recipeDetails";
 import Search from "../Search/search";
 import Category from "../CreateRecipe/Category/category";
+import {Link} from "react-router-dom";
+import {AUTH_TOKEN} from "../../shared/utility";
 
-const Recipes = () => {
+
+const Recipes = (props) => {
 
     const searchTerm = (term) => {
         if (term == '') {
@@ -52,6 +55,9 @@ const Recipes = () => {
             <div className="row">
                 <Search onSearchTerm={searchTerm}/>
                 <Category onCategoryChange = {categoryChange}/>
+                <Link to={"/createRecipe"} className="btn btn-outline-primary">
+                    <span><strong>Add new recipe</strong></span>
+                </Link>
             </div>
             <br/>
             <div className={"row"}>

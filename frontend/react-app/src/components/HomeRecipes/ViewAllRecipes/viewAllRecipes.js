@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from "react-router-dom";
 import {
     MDBContainer,
     MDBCol,
@@ -25,17 +26,13 @@ class ViewAllRecipes extends Component {
         const { collapseID } = this.state;
 
         return (
-
             <div class="card card-image" style={{backgroundImage: `url()`}}>
-
-
                 <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-                    <div>
-                        <h1 class="pink-text"><i class="fas fa-eye"></i> View All Recipes</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
-                            optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos.
-                            Odit sed qui, dolorum!.</p>
-                        <a class="btn btn-pink" href="/allRecipes"><i class="fas fa-clone left"></i> View All Recipes</a>
+                    <div class="text-white text-center d-flex align-items-center rgba-black-strong py-lg-5 px-4">
+                        <br/>
+                        <h1 class="pink-text"><i class="fas fa-eye"></i> <Link to={"/allRecipes"}>View All
+                            Recipes</Link></h1>
+
                     </div>
                 </div>
 

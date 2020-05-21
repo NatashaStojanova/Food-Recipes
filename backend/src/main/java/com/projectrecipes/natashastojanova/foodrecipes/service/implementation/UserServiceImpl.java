@@ -7,6 +7,7 @@ import com.projectrecipes.natashastojanova.foodrecipes.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -38,11 +39,11 @@ public class UserServiceImpl extends BaseEntityCrudServiceImpl<User, UserReposit
     }
 
     @Override
-    public User findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         logger.info("[PERSISTENCE] Get entity by Username");
         Optional<User> user = repository.findByUsername(username);
         if (user.isPresent())
-            return user.get();
+            return user;
         throw new UserNotFoundException();
     }
 

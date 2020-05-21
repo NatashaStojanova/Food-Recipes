@@ -1,48 +1,34 @@
 import React from "react";
-import { MDBJumbotron, MDBBtn, MDBContainer, MDBRow, MDBCol, MDBIcon, MDBCardBody, MDBCardText,  MDBCardTitle } from "mdbreact";
+import {
+    MDBCarousel,
+    MDBCarouselCaption,
+    MDBCarouselInner,
+    MDBCarouselItem,
+    MDBView,
+    MDBMask,
+    MDBContainer
+} from "mdbreact";
+import {Jumbotron} from 'reactstrap';
 
-const Home = () => {
+const Home = (props) => {
     return (
-        <MDBContainer className="mt-xl-5 text-center">
-            <MDBRow>
-                <MDBCol>
-                    <MDBJumbotron>
-                        <MDBCardBody>
-                            <MDBCardTitle className="h2">
-                                Material Design for Bootstrap
-                            </MDBCardTitle>
-                            <p className="blue-text my-4 font-weight-bold">
-                                Powerful and free Material Design UI KIT
-                            </p>
-                            <MDBCardText>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga
-                                aliquid dolorem ea distinctio exercitationem delectus qui, quas
-                                eum architecto, amet quasi accusantium, fugit consequatur
-                                ducimus obcaecati numquam molestias hic itaque accusantium
-                                doloremque laudantium, totam rem aperiam.
-                            </MDBCardText>
-                            <hr className="my-4" />
-                            <div className="pt-2">
-                                <MDBBtn
-                                    color="primary"
-                                    className="waves-effect"
-                                >
-                                    Buy now <MDBIcon far icon="gem" />
-                                </MDBBtn>
-                                <MDBBtn
-                                    outline
-                                    color="primary"
-                                    className="waves-effect"
-                                >
-                                    Download <MDBIcon icon="download" />
-                                </MDBBtn>
-                            </div>
-                        </MDBCardBody>
-                    </MDBJumbotron>
-                </MDBCol>
-            </MDBRow>
-        </MDBContainer>
+        <div>
+            <Jumbotron
+                style={{backgroundImage: `url(https://images.pexels.com/photos/940302/pexels-photo-940302.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)`}}>
+                <h1 className="display-3">Our Best Food Recipes Shared!</h1>
+                <h2 className="display-5">Find and share everyday cooking inspiration on FoodRecipes.
+                    Discover recipes, cooks, rate them and enjoy.</h2>
+                <br/>
+                <br/>
+                <hr className="my-2"/>
+                <br/>
+                <p className="lead">
+                    <h3 className="display-5">Sign up to get your ideas</h3>
+                    <a href="/register" className="btn btn-primary">Get started</a>
+                </p>
+            </Jumbotron>
+            <br/>
+        </div>
     )
 }
-
 export default Home;

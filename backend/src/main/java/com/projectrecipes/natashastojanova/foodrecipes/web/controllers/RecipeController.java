@@ -1,28 +1,24 @@
 package com.projectrecipes.natashastojanova.foodrecipes.web.controllers;
 
+import com.projectrecipes.natashastojanova.foodrecipes.dto.IngDTO;
 import com.projectrecipes.natashastojanova.foodrecipes.dto.RecipeDTO;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.CategoryNotFoundException;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeAlreadyExistsException;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeNotFoundException;
-import com.projectrecipes.natashastojanova.foodrecipes.model.Category;
-import com.projectrecipes.natashastojanova.foodrecipes.model.Ingredient;
-import com.projectrecipes.natashastojanova.foodrecipes.model.Recipe;
-import com.projectrecipes.natashastojanova.foodrecipes.model.RecipeIngredient;
-import com.projectrecipes.natashastojanova.foodrecipes.service.CategoryService;
-import com.projectrecipes.natashastojanova.foodrecipes.service.IngredientService;
-import com.projectrecipes.natashastojanova.foodrecipes.service.RecipeIngredientService;
-import com.projectrecipes.natashastojanova.foodrecipes.service.RecipeService;
+import com.projectrecipes.natashastojanova.foodrecipes.model.*;
+import com.projectrecipes.natashastojanova.foodrecipes.service.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 /**
  * @author Natasha Stojanova
  */
-
 @RestController
 @RequestMapping("/recipes")
 @CrossOrigin("*")
@@ -32,15 +28,18 @@ public class RecipeController {
     private final IngredientService ingredientService;
     private final CategoryService categoryService;
     private final RecipeIngredientService recipeIngredientService;
+    private final UserService userService;
 
     public RecipeController(RecipeService recipeService,
                             IngredientService ingredientService,
                             CategoryService categoryService,
-                            RecipeIngredientService recipeIngredientService) {
+                            RecipeIngredientService recipeIngredientService,
+                            UserService userService) {
         this.recipeService = recipeService;
         this.ingredientService = ingredientService;
         this.categoryService = categoryService;
         this.recipeIngredientService = recipeIngredientService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -55,19 +54,26 @@ public class RecipeController {
         if (recipeService.existsByName(recipeDTO.getName()))
             throw new RecipeAlreadyExistsException();
 
+        User signedIn = this.getSignedInUser();
+
         Recipe newRecipe = new Recipe();
         newRecipe.setName(recipeDTO.getName());
         newRecipe.setDescription(recipeDTO.getDescription());
         newRecipe.setTime(recipeDTO.getTime());
         Optional<Category> category = categoryService.findById(recipeDTO.getCategory());
         newRecipe.setCategory(category.get());
+        Optional<User> user = userService.findByUsername(recipeDTO.getUsername());
+        if(user.isPresent())
+            newRecipe.setUser(user.get());
         recipeService.save(newRecipe);
 
-        recipeDTO.getIngredientsList().forEach(ingID -> {
-            Optional<Ingredient> ing = ingredientService.findOne(ingID);
+        recipeDTO.getIngredientsList().forEach((ingredient) -> {
+            Optional<Ingredient> ing = ingredientService.findOne(Long.parseLong(ingredient.get("id")));
+            float amount = Float.parseFloat(ingredient.get("amount"));
             if (ing.isPresent()) {
                 RecipeIngredient recipeIngredient = new RecipeIngredient();
                 recipeIngredient.setIngredient(ing.get());
+                recipeIngredient.setAmount(amount);
                 recipeIngredient.setRecipe(newRecipe);
                 recipeIngredientService.save(recipeIngredient);
             }
@@ -98,24 +104,6 @@ public class RecipeController {
         return recipeDTO;
     }
 
-    /*//give me the pizza with specific ID
-    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-    public Recipe editRecipe(@PathVariable("id") Long id, RecipeDTO recipeDTO) {
-        Recipe recipe;
-        if (recipeService.findOne(id).isPresent()) {
-            recipe = recipeService.findOne(id).get();
-            recipe.setName(recipeDTO.getName());
-            recipe.setDescription(recipeDTO.getDescription());
-            recipe.setRating(recipeDTO.getRating());
-            recipe.setCategory(recipeDTO.getCategory());
-            recipe.setTime(recipeDTO.getTime());
-            recipe.setIngredientList(recipeDTO.getIngredientList());
-            recipeService.save(recipe);
-        } else
-            throw new RecipeNotFoundException();
-        return recipe;
-    }
-*/
     //give me all recipes that contain this ingredients
     @GetMapping("/comboIngredients")
     public List<Recipe> comboIngredients(List<Long> list_ID) {
@@ -158,7 +146,18 @@ public class RecipeController {
         return recipes;
     }
 
+    //show all recipes with specific ingredients
+    @RequestMapping(value = "/checkIngredients", method = RequestMethod.POST, consumes = "application/json")
+    public List<Recipe> searchRecipeByIngredients(@RequestBody List<String> ingredients){
+        return recipeService.findAll();
+    }
 
+    private User getSignedInUser() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        String email = authentication.getPrincipal().toString();
+        return userService.findByEmail(email);
+    }
 }
 
 

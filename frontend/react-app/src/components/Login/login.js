@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {withRouter} from "react-router-dom";
 import AuthenticationService from "../../service/AuthenticationService/authenticationService";
-import {AUTH_TOKEN} from "../../shared/utility";
+import {AUTH_TOKEN, AUTH_USERNAME} from "../../shared/utility";
 
 /**
  * @author Natasha Stojanova (natashastojanova6@gmail.com)
@@ -47,6 +47,7 @@ class Login extends Component {
             "password": this.state.password
         };
         AuthenticationService.loginUser(payload).then(resp => {
+            localStorage.setItem(AUTH_USERNAME, payload.username);
             localStorage.setItem(AUTH_TOKEN, resp.data);
             this.setState({
                 waitResponse: false,
@@ -64,7 +65,8 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
+                <br/>
                 {(!this.state.waitResponse ?
                     <MuiThemeProvider>
                         <div>

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import static com.projectrecipes.natashastojanova.foodrecipes.security.SecurityConstants.*;
@@ -48,10 +49,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                     .readValue(request.getInputStream(), UserLogin.class);
             List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-            User user = userService.findByUsername(creds.getUsername());
-            UserRole role = user.getUserRole();
+            Optional<User> user = userService.findByUsername(creds.getUsername());
+            UserRole role = user.get().getUserRole();
             authorities.add(new SimpleGrantedAuthority(role.getName()));
-            if (!userService.passwordMatches(user, creds.getPassword())) {
+            if (!userService.passwordMatches(user.get(), creds.getPassword())) {
                 throw new PasswordsNotTheSameException();
             }
             return authenticationManager.authenticate(

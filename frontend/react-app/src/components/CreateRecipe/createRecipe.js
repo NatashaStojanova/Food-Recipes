@@ -1,14 +1,12 @@
 import React, {Component} from 'react'
-import {AUTH_TOKEN} from "../../shared/utility";
+import {AUTH_TOKEN, AUTH_USERNAME} from "../../shared/utility";
 import {withRouter} from "react-router-dom";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import Recipe from "./Recipe/recipe"
 import Category from "./Category/category"
 import Button from "@material-ui/core/Button";
 import Ingredient from './Ingredient/ingredient'
 import RecipeService from "../../service/RecipeService/recipeService";
+import {ImageUpload} from "./ImageUpload/imageUpload";
 
 
 class CreateRecipe extends Component{
@@ -16,29 +14,24 @@ class CreateRecipe extends Component{
     constructor(props) {
         super(props);
 
-        let newUser = {
-            name: "",
-            username: "",
-            email: "",
-            password: "",
-
-        }
+        let newUsername = localStorage.getItem(AUTH_USERNAME);
 
         let newRecipe = {
             name: "",
             description: "",
             time: "",
-            ingredientsList: [],
+            ingredientsList: {},
             category: "",
+            username: "",
 
         }
 
-        let newIngredients = [];
+        let newIngredients = {};
 
         let newCategory = "";
 
         this.state = {
-            user:newUser,
+            username: newUsername,
             recipe:newRecipe,
             category:newCategory,
             ingredients: newIngredients,
@@ -83,16 +76,21 @@ class CreateRecipe extends Component{
       console.log(this.state.recipe);
       console.log(this.state.ingredients);
       console.log(this.state.category);
+        console.log(this.state.user);
 
         this.setState(prevState => {
             let ingList = this.state.ingredients;
             let categoryRecipe = this.state.category;
+            let userRecipe = this.state.username;
             this.state.recipe.ingredientsList = ingList;
             this.state.recipe.category = categoryRecipe;
+            this.state.recipe.username = userRecipe;
+
 
         },() =>{
             console.log(this.state.recipe)
             RecipeService.addRecipe(this.state.recipe).then(recipeResp => {
+                this.props.history.push("/allRecipes")
             }).catch(error => {
                 alert("an error occured")
             })
@@ -105,6 +103,7 @@ class CreateRecipe extends Component{
             <div class="container">
                 <Recipe onRecipeChange = {this.recipeChange}/>
                 <Category onCategoryChange = {this.categoryChange}/>
+                <ImageUpload/>
                 <Ingredient onIngredientChange = {this.ingredientChange}/>
 
             <Button color="primary" type="submit" onClick={this.saveRecipe}>Submit</Button>

@@ -28,7 +28,8 @@ class HomeRecipes extends Component {
         const { collapseID } = this.state;
 
         return (
-            <div class="container">
+            <div class="row">
+                <br/>
             <ViewAllRecipes/>
             <CreateNewRecipes/>
             <CheckYourIngredients/>

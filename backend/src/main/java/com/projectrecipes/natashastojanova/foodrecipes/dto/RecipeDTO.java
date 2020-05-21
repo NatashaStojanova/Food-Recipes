@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Natasha Stojanova
@@ -28,18 +29,17 @@ public class RecipeDTO {
 
     private Long id;
 
-
-    private List<User> userList;
+    // TODO: Remove username
+    private String username;
 
     private User user;
 
-    private List<Long> ingredientsList;
+    private List<Map<String, String>> ingredientsList;
+    //private List<Long> ingredientsList;
 
     private List<Ingredient> ingredients;
 
     private Category recipeCategory;
 
     private Long category;
-
-
 }
