@@ -104,26 +104,6 @@ public class RecipeController {
         return recipeDTO;
     }
 
-    //give me all recipes that contain this ingredients
-    @GetMapping("/comboIngredients")
-    public List<Recipe> comboIngredients(List<Long> list_ID) {
-        list_ID.add((long) 1);
-        list_ID.add((long) 2);
-        list_ID.add((long) 3);
-
-        List<Recipe> recipeList = new ArrayList<>();
-        recipeService.findAll().forEach(recipe -> {
-            List<Long> ing_ID = new ArrayList<>();
-            recipeService.findOne(recipe.getId()).get().getIngredientList().forEach(ingredient -> {
-                ing_ID.add(ingredient.getId());
-            });
-            if (ing_ID.containsAll(list_ID)) {
-                recipeList.add(recipe);
-            }
-        });
-        return recipeList;
-    }
-
     @RequestMapping(value = "/search/{term}", method = RequestMethod.GET)
     public List<Recipe> searchRecipeByName(@PathVariable("term") String term) {
         if (term.isEmpty()) {
@@ -148,8 +128,19 @@ public class RecipeController {
 
     //show all recipes with specific ingredients
     @RequestMapping(value = "/checkIngredients", method = RequestMethod.POST, consumes = "application/json")
-    public List<Recipe> searchRecipeByIngredients(@RequestBody List<String> ingredients){
-        return recipeService.findAll();
+    public List<Recipe> searchRecipeByIngredients(@RequestBody List<Long> ingredients) {
+
+        List<Recipe> recipeList = new ArrayList<>();
+        recipeService.findAll().forEach(recipe -> {
+            List<Long> ing_ID = new ArrayList<>();
+            recipeService.findOne(recipe.getId()).get().getIngredientList().forEach(ingredient -> {
+                ing_ID.add(ingredient.getIngredient().getId());
+            });
+            if (ing_ID.containsAll(ingredients)) {
+                recipeList.add(recipe);
+            }
+        });
+        return recipeList;
     }
 
     private User getSignedInUser() {
