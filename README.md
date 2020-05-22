@@ -30,5 +30,5 @@
 4. Connect to the database. *(for this project I used MySQL)*
 5. Run
 
-## IMPORTATNT
+## IMPORTANT
  *This project is currently under development.*
