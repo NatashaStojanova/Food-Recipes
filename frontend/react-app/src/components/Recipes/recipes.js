@@ -39,7 +39,6 @@ const Recipes = (props) => {
         axios.get("/recipes").then((data) => {
             console.log(data.data);
             setRecipe(data.data);
-
         });
     }, []);
 

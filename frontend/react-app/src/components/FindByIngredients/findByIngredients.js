@@ -5,6 +5,9 @@ import Button from "@material-ui/core/Button"
 import CheckIngredient from "./CheckIngredient/checkIngredient";
 import axios from "../../axios/axios"
 import RecipeService from "../../service/RecipeService/recipeService";
+import RecipeFound from "./RecipesFound/recipesFound";
+import Redirect from "react-router-dom/es/Redirect";
+import Link from "@material-ui/core/Link";
 
 class FindByIngredients extends Component {
 
@@ -15,10 +18,14 @@ class FindByIngredients extends Component {
 
         let newIngredients = {};
 
+        let newRecipe = {};
+
         this.state = {
             ingredients: newIngredients,
+            recipes: newRecipe,
             waitResponse: false,
             errMessage: null,
+            recipe: undefined,
         }
     }
 
@@ -37,19 +44,34 @@ class FindByIngredients extends Component {
 
     searchRecipesByIngredients = (e) => {
         console.log(this.state.ingredients);
-
         RecipeService.searchRecipes(this.state.ingredients).then(respData => {
-            alert('success')
-        }).catch(
-            alert("an error occured")
-        )
+            console.log(respData.data)
+            document.getElementById("showRecipes").style.visibility = "visible";
+            this.setState({recipes:respData.data},()=>{
+                console.log("recipes:")
+                console.log(this.state.recipes);
+            });
+        })
     }
-
     render() {
         return (
             <div class="container">
                 <CheckIngredient onIngredientChange={this.ingredientChange}/>
                 <Button color="primary" type="submit" onClick={this.searchRecipesByIngredients}>Search</Button>
+                <div id="showRecipes" style={{visibility: "hidden"}}>
+                    <div>
+                        {this.state.recipe !== undefined ?
+                        <div>
+                        <RecipeFound recipes = {this.state.recipes} />
+                        </div> :
+                            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}
+                                 className="container text-black-50 text-lg-center">
+                                <img alt="" style={{width: "10%"}}
+                                     src={require('../../assets/loading.gif')}/>
+                                Please wait while we fetch our data
+                            </div> }
+                    </div>
+                </div>
             </div>
         )
     }
