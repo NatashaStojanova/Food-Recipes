@@ -23,14 +23,9 @@ class Register extends Component {
     }
 
     setErrorMessage(error) {
-        if (error.response.status === 403)
-            this.setState({
-                errMessage: "Please choose another username."
-            });
-        else
-            this.setState({
-                errMessage: error.response.data,
-            })
+        this.setState({
+            errMessage: 'Please choose another username',
+        })
     }
 
     clearErrorMessage() {

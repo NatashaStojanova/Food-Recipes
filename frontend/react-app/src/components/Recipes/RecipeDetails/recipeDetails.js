@@ -20,7 +20,8 @@ import axios from "../../../axios/axios";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 345,
+        display: 'block',
+        width: '20vw',
     },
     media: {
         height: 0,

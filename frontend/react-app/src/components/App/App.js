@@ -8,12 +8,10 @@ import Login from "../Login/login"
 import Register from "../Register/register"
 import Footer from "../Footer/footer";
 import CreateRecipe from "../CreateRecipe/createRecipe"
-import HomeRecipes from "../HomeRecipes/homeRecipes";
 import Recipes from "../Recipes/recipes";
 import RecipeDetails from "../Recipes/RecipeDetails/recipeDetails";
 import Exe from "../exe"
 import Parent from "../parent";
-import CheckIngredient from "../FindByIngredients/CheckIngredient/checkIngredient";
 import FindByIngredients from "../FindByIngredients/findByIngredients";
 function App() {
   return (
@@ -26,7 +24,6 @@ function App() {
               <Route path="/login" exact render={() => <Login/>}/>
               <Route path="/register" exact render={() => <Register/>}/>
               <Route path="/createRecipe" exact render={() => <CreateRecipe/>}/>
-              <Route path="/homeRecipes" exact render={() => <HomeRecipes/>}/>
               <Route path="/allRecipes" exact render={() => <Recipes/>}/>
               <Route path="/recipe/:id/details" exact render={() => <RecipeDetails/>}/>
               <Route path="/exe" exact render={() => <Exe/>}/>

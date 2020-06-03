@@ -54,9 +54,6 @@ const Recipes = (props) => {
             <div className="row">
                 <Search onSearchTerm={searchTerm}/>
                 <Category onCategoryChange = {categoryChange}/>
-                <Link to={"/createRecipe"} className="btn btn-outline-primary">
-                    <span><strong>Add new recipe</strong></span>
-                </Link>
             </div>
             <br/>
             <div className={"row"}>

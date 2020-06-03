@@ -18,14 +18,11 @@ class FindByIngredients extends Component {
 
         let newIngredients = {};
 
-        let newRecipe = {};
-
         this.state = {
             ingredients: newIngredients,
-            recipes: newRecipe,
+            recipes: [],
             waitResponse: false,
             errMessage: null,
-            recipe: undefined,
         }
     }
 
@@ -45,10 +42,10 @@ class FindByIngredients extends Component {
     searchRecipesByIngredients = (e) => {
         console.log(this.state.ingredients);
         RecipeService.searchRecipes(this.state.ingredients).then(respData => {
-            console.log(respData.data)
+            console.log(respData.data);
             document.getElementById("showRecipes").style.visibility = "visible";
             this.setState({recipes:respData.data},()=>{
-                console.log("recipes:")
+                console.log("recipes:");
                 console.log(this.state.recipes);
             });
         })
@@ -57,10 +54,12 @@ class FindByIngredients extends Component {
         return (
             <div class="container">
                 <CheckIngredient onIngredientChange={this.ingredientChange}/>
-                <Button color="primary" type="submit" onClick={this.searchRecipesByIngredients}>Search</Button>
+                <button className="btn btn-outline-success navbar-inverse my-2 my-sm-0" type="submit"
+                        onClick={this.searchRecipesByIngredients}>Search
+                </button>
                 <div id="showRecipes" style={{visibility: "hidden"}}>
                     <div>
-                        {this.state.recipe !== undefined ?
+                        {this.state.recipes.length > 0 ?
                         <div>
                         <RecipeFound recipes = {this.state.recipes} />
                         </div> :

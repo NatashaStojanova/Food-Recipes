@@ -21,14 +21,9 @@ class Login extends Component {
     }
 
     setErrorMessage(error) {
-        if (error.response.status === 403)
-            this.setState({
-                errMessage: "Invalid credentials"
-            });
-        else
-            this.setState({
-                errMessage: error.response.data,
-            })
+        this.setState({
+            errMessage: "Invalid credentials"
+        });
     }
 
     clearErrorMessage() {
@@ -52,7 +47,7 @@ class Login extends Component {
             this.setState({
                 waitResponse: false,
             });
-            this.props.history.push('/homeRecipes');
+            this.props.history.push('/allRecipes');
         }).catch(error => {
             this.setErrorMessage(error);
             this.setState({
@@ -60,9 +55,6 @@ class Login extends Component {
             });
         })
     }
-
-
-
     render() {
         return (
             <div className="container">
