@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
+import java.util.Optional;
 
 /**
  * @author Natasha Stojanova
@@ -31,7 +32,8 @@ public class UserController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public UserLogin registerUser(@RequestBody UserLogin user) throws RoleNotFoundException {
         User newUser = new User();
-        if(userService.findByUsername(user.getUsername()).isPresent())
+        Optional<User> u = userService.findByUsername(user.getUsername());
+        if (u.isPresent())
             throw new UserAlreadyExistsException();
         newUser.setName(user.getName());
         newUser.setEmail(user.getEmail());
