@@ -60,7 +60,6 @@ public class RecipeController {
         return recipeService.findAll();
     }
 
-
     //create new Recipe
     @RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data"})
     public Recipe addNewRecipe(@ModelAttribute RecipeDTO recipeDTO) {
@@ -102,7 +101,8 @@ public class RecipeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        newRecipe.setImage(imagesFolder + fileName);
+
+        newRecipe.setImage("http://localhost:8080/" + fileName);
 
         recipeService.save(newRecipe);
 
@@ -137,6 +137,7 @@ public class RecipeController {
             recipeDTO.setTime(recipe.getTime());
             recipeDTO.setRecipeCategory(recipe.getCategory());
             recipeDTO.setUser(recipe.getUser());
+            recipeDTO.setImageURL(recipe.getImage());
             recipeDTO.setDescription(recipe.getDescription());
         } else
             throw new RecipeNotFoundException();

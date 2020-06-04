@@ -42,6 +42,7 @@ public class RecipeDTO {
 
     private String ingredientsList;
 
+    private String imageURL;
 
     private List<Ingredient> ingredients;
 

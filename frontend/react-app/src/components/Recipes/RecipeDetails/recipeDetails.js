@@ -66,7 +66,8 @@ const RecipeDetails = (props) => {
 
     return (
         <div>
-            {recipe !== undefined && recipe.ingredients !== undefined && recipe.recipeCategory !== undefined ?
+            {recipe !== undefined && recipe.ingredients !== undefined && recipe.recipeCategory !== undefined
+                && recipe.imageURL !== undefined ?
                 <div className="container">
                     <Card className={classes.root}>
                         <CardHeader
@@ -85,7 +86,7 @@ const RecipeDetails = (props) => {
                         />
                         <CardMedia
                             className={classes.media}
-                            image="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQfrWgL1flECdzIoCKOqvQDjtbDqWFNzs5Z1dAvp8oKfL93AaLe&usqp=CAU"
+                            image= {recipe.imageURL}
                             title="Paella dish"
                         />
                         <CardContent>
