@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,8 @@ public class RecipeController {
     private final CategoryService categoryService;
     private final RecipeIngredientService recipeIngredientService;
     private final UserService userService;
+
+    private String imagesFolder = "C:\\Users\\natas\\Desktop\\FCSE\\FoodRecipes\\backend\\src\\main\\resources\\images\\";
 
     public RecipeController(RecipeService recipeService,
                             IngredientService ingredientService,
@@ -60,8 +63,7 @@ public class RecipeController {
 
     //create new Recipe
     @RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data"})
-    public Recipe addNewRecipe(@ModelAttribute RecipeDTO recipeDTO) throws ParseException {
-
+    public Recipe addNewRecipe(@ModelAttribute RecipeDTO recipeDTO) {
         if (recipeService.existsByName(recipeDTO.getName()))
             throw new RecipeAlreadyExistsException();
 
@@ -73,9 +75,35 @@ public class RecipeController {
         newRecipe.setTime(recipeDTO.getTime());
         Optional<Category> category = categoryService.findById(recipeDTO.getCategory());
         newRecipe.setCategory(category.get());
+
         Optional<User> user = userService.findByUsername(recipeDTO.getUsername());
         if (user.isPresent())
             newRecipe.setUser(user.get());
+
+        //saving image into directory
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        MultipartFile file = recipeDTO.getImage();
+        String fileName = file.getOriginalFilename();
+        File newFile = new File(imagesFolder + fileName);
+        try {
+            inputStream = file.getInputStream();
+
+            if (!newFile.exists()) {
+                newFile.createNewFile();
+            }
+            outputStream = new FileOutputStream(newFile);
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        newRecipe.setImage(imagesFolder + fileName);
+
         recipeService.save(newRecipe);
 
         ingrs.forEach((ingredient) -> {
@@ -89,6 +117,7 @@ public class RecipeController {
                 recipeIngredientService.save(recipeIngredient);
             }
         });
+
         return newRecipe;
     }
 

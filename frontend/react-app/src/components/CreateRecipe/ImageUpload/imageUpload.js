@@ -17,7 +17,7 @@ export class ImageUpload extends Component {
 
     render() {
         return (
-            <div class="input-group">
+            <div className="form-group col-md-5">
                 <div className="custom-file">
                     <input type="file" name="file" onChange={this.onFileUploadHandler} className="custom-file-input" id="inputGroupFile01"
                            aria-describedby="inputGroupFileAddon01" />

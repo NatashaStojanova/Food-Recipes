@@ -41,5 +41,7 @@ public class Recipe {
     @ManyToOne
     private Category category;
 
+    private String image;
+
 
 }
