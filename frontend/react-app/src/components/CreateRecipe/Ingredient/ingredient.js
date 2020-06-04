@@ -23,17 +23,17 @@ class Ingredient extends Component {
         if (key === "amount" || e.target.checked)      //if checked (true), then add this id into checkedList
         {
             resultArray = this.state.checkedList.filter(checkedIngredient => {
-                return checkedIngredient.id !== id
+                return checkedIngredient.id !== id.toString()
             });
             if (key === "amount")
-                resultArray.push({id: id, amount: val});
+                resultArray.push({id: id.toString(), amount: val});
             else
-                resultArray.push({id: id, amount: null});
+                resultArray.push({id: id.toString(), amount: null});
         }
         else                    //if not checked (false), then remove this id from checkedList
         {
             resultArray = this.state.checkedList.filter(CheckedId=>{
-                return CheckedId !== id
+                return CheckedId !== id.toString()
             })
         }
 

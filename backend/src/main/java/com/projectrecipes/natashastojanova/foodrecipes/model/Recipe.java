@@ -24,6 +24,7 @@ public class Recipe {
     private float time;
     private int rating;
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

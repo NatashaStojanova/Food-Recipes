@@ -11,7 +11,6 @@ class Category extends Component{
     }
 
     onCategoryChange = (e) =>{
-
         this.props.onCategoryChange(e.target.value);
     }
 

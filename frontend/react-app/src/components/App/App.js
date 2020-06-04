@@ -10,8 +10,6 @@ import Footer from "../Footer/footer";
 import CreateRecipe from "../CreateRecipe/createRecipe"
 import Recipes from "../Recipes/recipes";
 import RecipeDetails from "../Recipes/RecipeDetails/recipeDetails";
-import Exe from "../exe"
-import Parent from "../parent";
 import FindByIngredients from "../FindByIngredients/findByIngredients";
 function App() {
   return (
@@ -26,8 +24,6 @@ function App() {
               <Route path="/createRecipe" exact render={() => <CreateRecipe/>}/>
               <Route path="/allRecipes" exact render={() => <Recipes/>}/>
               <Route path="/recipe/:id/details" exact render={() => <RecipeDetails/>}/>
-              <Route path="/exe" exact render={() => <Exe/>}/>
-              <Route path="/exec" exact render={() => <Parent/>}/>
               <Route path="/searchRecipes" exact render={() => <FindByIngredients/>}/>
 
               <Footer/>

@@ -1,5 +1,8 @@
 package com.projectrecipes.natashastojanova.foodrecipes.web.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.projectrecipes.natashastojanova.foodrecipes.dto.IngDTO;
 import com.projectrecipes.natashastojanova.foodrecipes.dto.RecipeDTO;
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.CategoryNotFoundException;
@@ -7,14 +10,21 @@ import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeAlreadyE
 import com.projectrecipes.natashastojanova.foodrecipes.exceptions.RecipeNotFoundException;
 import com.projectrecipes.natashastojanova.foodrecipes.model.*;
 import com.projectrecipes.natashastojanova.foodrecipes.service.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 /**
  * @author Natasha Stojanova
@@ -49,25 +59,26 @@ public class RecipeController {
 
 
     //create new Recipe
-    @PostMapping
-    public Recipe addNewRecipe(@Valid @RequestBody RecipeDTO recipeDTO) {
+    @RequestMapping(method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    public Recipe addNewRecipe(@ModelAttribute RecipeDTO recipeDTO) throws ParseException {
+
         if (recipeService.existsByName(recipeDTO.getName()))
             throw new RecipeAlreadyExistsException();
 
-        User signedIn = this.getSignedInUser();
-
         Recipe newRecipe = new Recipe();
+        Gson gson = new Gson();
+        List<Map<String, String>> ingrs = gson.fromJson(recipeDTO.getIngredientsList(), List.class);
         newRecipe.setName(recipeDTO.getName());
         newRecipe.setDescription(recipeDTO.getDescription());
         newRecipe.setTime(recipeDTO.getTime());
         Optional<Category> category = categoryService.findById(recipeDTO.getCategory());
         newRecipe.setCategory(category.get());
         Optional<User> user = userService.findByUsername(recipeDTO.getUsername());
-        if(user.isPresent())
+        if (user.isPresent())
             newRecipe.setUser(user.get());
         recipeService.save(newRecipe);
 
-        recipeDTO.getIngredientsList().forEach((ingredient) -> {
+        ingrs.forEach((ingredient) -> {
             Optional<Ingredient> ing = ingredientService.findOne(Long.parseLong(ingredient.get("id")));
             float amount = Float.parseFloat(ingredient.get("amount"));
             if (ing.isPresent()) {
@@ -150,5 +161,4 @@ public class RecipeController {
         return userService.findByEmail(email);
     }
 }
-
 

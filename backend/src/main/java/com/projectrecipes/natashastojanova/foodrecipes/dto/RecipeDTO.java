@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +24,14 @@ import java.util.Map;
 public class RecipeDTO {
 
     private String name;
-    private String description;
-    private float time;
-    private int rating;
 
+    private String description;
+
+    private float time;
+
+    private MultipartFile image;
+
+    private int rating;
 
     private Long id;
 
@@ -34,12 +40,14 @@ public class RecipeDTO {
 
     private User user;
 
-    private List<Map<String, String>> ingredientsList;
-    //private List<Long> ingredientsList;
+    private String ingredientsList;
+
 
     private List<Ingredient> ingredients;
 
     private Category recipeCategory;
 
     private Long category;
+
+
 }

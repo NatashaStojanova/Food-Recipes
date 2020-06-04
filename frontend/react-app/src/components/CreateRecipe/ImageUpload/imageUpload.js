@@ -4,24 +4,27 @@ export class ImageUpload extends Component {
     constructor(props) {
         super(props);
     }
+    state = {
+        selectedFile: null,
+    }
 
-    handleUploadFile = (event) => {
-        const data = new FormData();
-        //using File API to get chosen file
-        let file = event.target.files[0];
-        console.log("Uploading file", event.target.files[0]);
-        data.append('file', event.target.files[0]);
-        data.append('name', 'my_file');
-        data.append('description', 'this file is uploaded by young padawan');
-        let self = this;
-        //calling async Promise and handling response or error situation
+    onFileUploadHandler = (e) => {
+        this.setState({
+            selectedFile: e.target.files[0]
+        }, () =>
+        this.props.onFileUploadHandler(this.state.selectedFile))
     };
 
     render() {
         return (
-            <div>
-                <input type="file" onChange={this.handleUploadFile}/>
+            <div class="input-group">
+                <div className="custom-file">
+                    <input type="file" name="file" onChange={this.onFileUploadHandler} className="custom-file-input" id="inputGroupFile01"
+                           aria-describedby="inputGroupFileAddon01" />
+                        <label className="custom-file-label" htmlFor="inputGroupFile01">Choose file</label>
+                </div>
             </div>
+
         )
     };
 }

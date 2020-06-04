@@ -8,8 +8,7 @@ import Ingredient from './Ingredient/ingredient'
 import RecipeService from "../../service/RecipeService/recipeService";
 import {ImageUpload} from "./ImageUpload/imageUpload";
 
-
-class CreateRecipe extends Component{
+class CreateRecipe extends Component {
 
     constructor(props) {
         super(props);
@@ -30,10 +29,13 @@ class CreateRecipe extends Component{
 
         let newCategory = "";
 
+        let newImage = "";
+
         this.state = {
             username: newUsername,
-            recipe:newRecipe,
-            category:newCategory,
+            recipe: newRecipe,
+            category: newCategory,
+            image: newImage,
             ingredients: newIngredients,
             waitResponse: false,
             errMessage: null,
@@ -46,50 +48,60 @@ class CreateRecipe extends Component{
     }
 
 
-    ingredientChange = ((ingList) =>{
-        this.setState({ingredients:ingList},()=>{
+    ingredientChange = ((ingList) => {
+        this.setState({ingredients: ingList}, () => {
             //console.log(ingList);
-            //console.log(this.state.ingredients);
+            console.log(this.state.ingredients);
         });
     });
 
     categoryChange = ((value) => {
-        this.setState({category: value },()=>{
+        this.setState({category: value}, () => {
             //console.log(this.state.category);
             //console.log(this.state.ingredients);
         });
     });
 
-    recipeChange = ((target,value) => {
+    recipeChange = ((target, value) => {
         this.setState(prevState => {
             let recipe = this.state.recipe;
             recipe[target] = value;
-            return{
-                recipe:recipe,
+            return {
+                recipe: recipe,
             }
-        },() =>{
+        }, () => {
             //console.log(this.state.recipe)
         })
     });
 
+    fileUploadHandler = (selectedFile) => {
+        this.setState({image: selectedFile})
+    }
+
     saveRecipe = (e) => {
-      console.log(this.state.recipe);
-      console.log(this.state.ingredients);
-      console.log(this.state.category);
-        console.log(this.state.user);
 
         this.setState(prevState => {
             let ingList = this.state.ingredients;
             let categoryRecipe = this.state.category;
             let userRecipe = this.state.username;
+
             this.state.recipe.ingredientsList = ingList;
             this.state.recipe.category = categoryRecipe;
             this.state.recipe.username = userRecipe;
 
-
-        },() =>{
+        }, () => {
+            console.log("eve go finalniot recept:")
             console.log(this.state.recipe)
-            RecipeService.addRecipe(this.state.recipe).then(recipeResp => {
+            let formData = new FormData();
+            formData.append('image', this.state.image);
+            formData.append('name', this.state.recipe.name);
+            formData.append('description', this.state.recipe.description);
+            formData.append('category', this.state.recipe.category);
+            formData.append('time', this.state.recipe.time);
+            formData.append('username', this.state.recipe.username);
+            formData.append("ingredientsList", JSON.stringify(this.state.recipe.ingredientsList));
+
+            RecipeService.addRecipe(formData).then(recipeResp => {
                 this.props.history.push("/allRecipes")
             }).catch(error => {
                 alert("an error occured")
@@ -99,14 +111,13 @@ class CreateRecipe extends Component{
     }
 
     render() {
-        return(
+        return (
             <div class="container">
-                <Recipe onRecipeChange = {this.recipeChange}/>
-                <Category onCategoryChange = {this.categoryChange}/>
-                <ImageUpload/>
-                <Ingredient onIngredientChange = {this.ingredientChange}/>
-
-            <Button color="primary" type="submit" onClick={this.saveRecipe}>Submit</Button>
+                <Recipe onRecipeChange={this.recipeChange}/>
+                <Category onCategoryChange={this.categoryChange}/>
+                <ImageUpload onFileUploadHandler={this.fileUploadHandler}/>
+                <Ingredient onIngredientChange={this.ingredientChange}/>
+                <Button color="primary" type="submit" onClick={this.saveRecipe}>Submit</Button>
             </div>
         )
     }
